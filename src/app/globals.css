@@ -60,3 +60,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .menu-price {
+    font-family: 'Noto Sans', 'Segoe UI', Arial, Roboto, sans-serif;
+    color: #C3A27A;
+  }
+}
