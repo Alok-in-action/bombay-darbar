@@ -17,7 +17,7 @@ export const NonVegIcon = (props: React.SVGProps<SVGSVGElement>) => (
             xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
-            <rect width="12" height="12" fill="#C62828"/>
+            <path d="M6 1 L11 10 H1 Z" fill="#C62828" />
         </svg>
     </div>
 );
