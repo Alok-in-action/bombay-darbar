@@ -149,16 +149,18 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                     <Card key={item.name} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
                       <CardHeader>
                         <div className="flex items-start justify-between gap-4">
-                          <CardTitle className="font-headline text-lg flex-grow">
-                            {item.name}
-                          </CardTitle>
+                          <div className="flex items-center gap-2 flex-grow flex-wrap">
+                            <CardTitle className="font-headline text-lg">
+                              {item.name}
+                            </CardTitle>
+                            {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
+                          </div>
                           <p className="text-lg font-semibold menu-price whitespace-nowrap">₹{item.price}</p>
                         </div>
                       </CardHeader>
                       <CardContent className="flex flex-col justify-between flex-grow pt-0">
-                        <div className="flex items-start justify-between gap-4">
-                            <CardDescription className="flex-grow">{item.description}</CardDescription>
-                            {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
+                        <div>
+                          <CardDescription>{item.description}</CardDescription>
                         </div>
                         {item.popular && (
                             <div className="pt-4">
