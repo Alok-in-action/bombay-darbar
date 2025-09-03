@@ -78,15 +78,15 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
-        <div className="container mx-auto px-4 pb-2 md:pb-0">
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 md:flex-nowrap md:py-0 md:h-20">
-              <div className="w-full text-center md:w-auto">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 md:flex-nowrap md:h-24">
+              <div className="flex-shrink-0">
                   <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">
                     Bombay Darbar
                     <span className="block text-2xl font-normal text-muted-foreground">Hotel & Restaurant</span>
                   </h1>
               </div>
-              <div className="order-last flex w-full flex-col items-center gap-4 md:order-none md:w-auto md:flex-row md:flex-1 md:justify-end">
+              <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
                 <div className="veg-nonveg-toggle">
                   <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
                   <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
@@ -107,7 +107,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </header>
 
-      <nav className="sticky top-20 z-20 border-b bg-background/90 backdrop-blur-sm">
+      <nav className="sticky top-[100px] z-20 border-b bg-background/90 backdrop-blur-sm">
         <div className="container mx-auto overflow-x-auto px-4">
           <div className="flex items-center justify-start md:justify-center">
           {visibleCategories.map((category) => (
