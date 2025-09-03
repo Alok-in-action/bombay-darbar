@@ -134,4 +134,32 @@
       font-size: 0.9rem;
     }
   }
+
+  /* Ensure the toggle container uses flex and allows all buttons to show */
+  .toggle-group {
+    display: flex;
+    flex-wrap: nowrap; /* Prevents buttons from wrapping */
+    gap: 0; /* No gap for this design */
+    overflow: hidden; /* Keep rounded corners */
+    justify-content: flex-start; /* Align buttons to left */
+  }
+
+  /* Make sure all toggle buttons are visible */
+  .toggle-group button {
+    display: inline-block !important; /* Force display */
+    opacity: 1 !important; /* Ensure full visibility */
+    visibility: visible !important;
+    min-width: 80px; /* Minimum width for buttons */
+    padding: 10px 25px;
+    cursor: pointer;
+  }
+
+  /* Remove any media queries hiding non-veg button */
+  @media (min-width: 768px) {
+    .toggle-group button.non-veg {
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+  }
 }

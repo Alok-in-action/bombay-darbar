@@ -87,10 +87,10 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                   </h1>
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
-                <div className="veg-nonveg-toggle">
+                <div className="veg-nonveg-toggle toggle-group">
                   <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
                   <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
-                  <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option', {'active': filterType === 'non-veg'})}>Non-Veg</button>
+                  <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option non-veg', {'active': filterType === 'non-veg'})}>Non-Veg</button>
                 </div>
                 <div className="relative w-full max-w-sm">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
