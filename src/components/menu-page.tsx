@@ -80,7 +80,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 pb-2 md:pb-0">
           <div className="flex flex-wrap items-center justify-between gap-4 py-4 md:flex-nowrap md:py-0 md:h-20">
-              <div className="text-center md:text-left">
+              <div className="w-full text-center md:w-auto">
                   <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">
                     Bombay Darbar
                     <span className="block text-2xl font-normal text-muted-foreground">Hotel & Restaurant</span>
