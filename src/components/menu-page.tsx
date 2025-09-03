@@ -144,21 +144,27 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                 className="animate-fade-in"
               >
                 <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {category.items.map((item) => (
                     <Card key={item.name} className="flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-                      <CardHeader className="flex-row items-start justify-between gap-4">
-                        <div className="space-y-1.5">
-                            <CardTitle className="font-headline text-xl">{item.name}</CardTitle>
-                            <CardDescription>{item.description}</CardDescription>
+                      <CardHeader>
+                        <div className="flex items-start justify-between gap-4">
+                          <CardTitle className="font-headline text-lg flex-grow">
+                            {item.name}
+                          </CardTitle>
+                          <p className="text-lg font-semibold menu-price whitespace-nowrap">₹{item.price}</p>
                         </div>
-                        {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
                       </CardHeader>
-                      <CardContent className="flex flex-col-reverse justify-between flex-grow">
-                        <div className="flex items-center justify-between pt-4">
-                          <p className="text-lg font-semibold menu-price">₹{item.price}</p>
-                          {item.popular && <Badge variant="secondary">Popular</Badge>}
+                      <CardContent className="flex flex-col justify-between flex-grow pt-0">
+                        <div className="flex items-start justify-between gap-4">
+                            <CardDescription className="flex-grow">{item.description}</CardDescription>
+                            {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
                         </div>
+                        {item.popular && (
+                            <div className="pt-4">
+                                <Badge variant="secondary">Popular</Badge>
+                            </div>
+                        )}
                       </CardContent>
                     </Card>
                   ))}
