@@ -79,7 +79,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:h-24">
+          <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
               <div className="flex-shrink-0 text-center md:text-left">
                   <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">
                     Bombay Darbar
@@ -92,22 +92,22 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                   <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
                   <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option non-veg', {'active': filterType === 'non-veg'})}>Non-Veg</button>
                 </div>
-                <div className="relative w-full max-w-sm">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input
-                        type="search"
-                        placeholder="Search the menu..."
-                        className="pl-10"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
+              </div>
+              <div className="relative w-full md:w-auto md:flex-grow md:max-w-sm md:ml-auto">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Input
+                      type="search"
+                      placeholder="Search the menu..."
+                      className="pl-10"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                  />
               </div>
           </div>
         </div>
       </header>
 
-      <nav className="sticky top-[100px] z-20 border-b bg-background/90 backdrop-blur-sm">
+      <nav className="sticky top-[152px] md:top-[120px] z-20 border-b bg-background/90 backdrop-blur-sm">
         <div className="container mx-auto overflow-x-auto px-4">
           <div className="flex items-center justify-start md:justify-center">
           {visibleCategories.map((category) => (
