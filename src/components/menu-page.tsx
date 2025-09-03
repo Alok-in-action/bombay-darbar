@@ -122,7 +122,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
               <div className="flex-shrink-0 text-center md:text-left">
@@ -179,7 +179,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pt-48 md:pt-40">
         {filteredMenu.length > 0 ? (
           <div className="space-y-12">
             {filteredMenu.map((category) => (
