@@ -16,6 +16,8 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const [activeCategory, setActiveCategory] = useState<string>(menuData[0]?.id || '');
   const [filterType, setFilterType] = useState<FilterType>('all');
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const navItemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,6 +37,27 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
 
     return () => observer.disconnect();
   }, [menuData]);
+
+  useEffect(() => {
+    const activeNavItem = navItemRefs.current[activeCategory];
+    if (activeNavItem && navContainerRef.current) {
+      const container = navContainerRef.current;
+      const { offsetLeft, offsetWidth } = activeNavItem;
+      const { scrollLeft, clientWidth } = container;
+
+      // Check if the active item is not fully visible
+      const isVisible = offsetLeft >= scrollLeft && offsetLeft + offsetWidth <= scrollLeft + clientWidth;
+      
+      if (!isVisible) {
+        // Scroll to the center of the active item
+        const scrollOffset = offsetLeft + offsetWidth / 2 - clientWidth / 2;
+        container.scrollTo({
+          left: scrollOffset,
+          behavior: 'smooth',
+        });
+      }
+    }
+  }, [activeCategory]);
 
 
   const filteredMenu = useMemo(() => {
@@ -108,12 +131,13 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
       </header>
 
       <nav className="sticky top-[152px] md:top-[120px] z-20 border-b bg-background/90 backdrop-blur-sm">
-        <div className="container mx-auto overflow-x-auto px-4">
+        <div className="container mx-auto overflow-x-auto px-4" ref={navContainerRef}>
           <div className="flex items-center justify-start md:justify-center">
           {visibleCategories.map((category) => (
             <a
               key={category.id}
               href={`#${category.id}`}
+              ref={(el) => (navItemRefs.current[category.id] = el)}
               onClick={(e) => {
                 e.preventDefault();
                 document.getElementById(category.id)?.scrollIntoView({ behavior: 'smooth' });
