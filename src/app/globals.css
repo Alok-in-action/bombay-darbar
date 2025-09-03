@@ -66,4 +66,72 @@
     font-family: 'Noto Sans', 'Segoe UI', Arial, Roboto, sans-serif;
     color: #C3A27A;
   }
+  
+  /* Container for toggle */
+  .veg-nonveg-toggle {
+    display: inline-flex;
+    border-radius: 25px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+  }
+
+  /* The buttons inside the toggle */
+  .veg-nonveg-toggle .toggle-option {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 10px 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #666;
+    transition: color 0.3s ease;
+    flex: 1 1 auto;
+    text-align: center;
+    user-select: none;
+    position: relative;
+    z-index: 2;
+    outline: none;
+  }
+
+  /* Active button style */
+  .veg-nonveg-toggle .toggle-option.active {
+    color: white;
+    font-weight: 700;
+    z-index: 3;
+  }
+
+  /* Sliding background for active toggle */
+  .veg-nonveg-toggle .toggle-option.active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 25px;
+    background-color: var(--active-color, #4CAF50); /* Green by default */
+    z-index: -1;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* All active uses accent color */
+  .veg-nonveg-toggle .toggle-option#all-btn.active::before {
+    --active-color: hsl(var(--accent));
+  }
+
+  /* Veg active uses green */
+  .veg-nonveg-toggle .toggle-option#veg-btn.active::before {
+    --active-color: #4CAF50; /* Green */
+  }
+
+  /* Non-Veg active uses reddish */
+  .veg-nonveg-toggle .toggle-option#nonveg-btn.active::before {
+    --active-color: #C62828; /* Red */
+  }
+
+  /* Responsive text size */
+  @media (max-width: 600px) {
+    .veg-nonveg-toggle .toggle-option {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
 }

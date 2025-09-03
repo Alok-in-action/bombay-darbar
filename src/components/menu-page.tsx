@@ -9,9 +9,12 @@ import { NonVegIcon, VegIcon } from '@/components/icons';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+type FilterType = 'all' | 'veg' | 'non-veg';
+
 export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>(menuData[0]?.id || '');
+  const [filterType, setFilterType] = useState<FilterType>('all');
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
@@ -35,19 +38,42 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
 
 
   const filteredMenu = useMemo(() => {
-    if (!searchQuery) return menuData;
-    const lowercasedQuery = searchQuery.toLowerCase();
-    
-    const result = menuData.map(category => {
-      const filteredItems = category.items.filter(item => 
-        item.name.toLowerCase().includes(lowercasedQuery) || 
-        item.description.toLowerCase().includes(lowercasedQuery)
-      );
-      return { ...category, items: filteredItems };
-    }).filter(category => category.items.length > 0);
+    let menuToFilter = menuData;
 
-    return result;
-  }, [searchQuery, menuData]);
+    const filterBySearch = (categories: MenuCategory[]) => {
+      if (!searchQuery) return categories;
+      const lowercasedQuery = searchQuery.toLowerCase();
+      
+      return categories.map(category => {
+        const filteredItems = category.items.filter(item => 
+          item.name.toLowerCase().includes(lowercasedQuery) || 
+          item.description.toLowerCase().includes(lowercasedQuery)
+        );
+        return { ...category, items: filteredItems };
+      }).filter(category => category.items.length > 0);
+    };
+
+    const filterByVegNonVeg = (categories: MenuCategory[]) => {
+        if (filterType === 'all') return categories;
+        
+        return categories.map(category => {
+            const filteredItems = category.items.filter(item => item.type === filterType);
+            return { ...category, items: filteredItems };
+        }).filter(category => category.items.length > 0);
+    };
+    
+    menuToFilter = filterByVegNonVeg(menuToFilter);
+    menuToFilter = filterBySearch(menuToFilter);
+
+    return menuToFilter;
+
+  }, [searchQuery, menuData, filterType]);
+
+  const visibleCategories = useMemo(() => menuData.filter(category => {
+    if (filterType === 'all') return true;
+    return category.items.some(item => item.type === filterType);
+  }), [menuData, filterType]);
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -58,16 +84,32 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                     <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">Bombay Darbar</h1>
                     <p className="hidden text-sm text-muted-foreground md:block">Authentic Indian Cuisine</p>
                 </div>
-                <div className="relative w-full max-w-sm">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <Input
-                        type="search"
-                        placeholder="Search the menu..."
-                        className="pl-10"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+                <div className="flex flex-1 items-center justify-end gap-4">
+                  <div className="hidden md:flex">
+                    <div className="veg-nonveg-toggle">
+                      <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
+                      <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
+                      <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option', {'active': filterType === 'non-veg'})}>Non-Veg</button>
+                    </div>
+                  </div>
+                  <div className="relative w-full max-w-sm">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input
+                          type="search"
+                          placeholder="Search the menu..."
+                          className="pl-10"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                  </div>
                 </div>
+            </div>
+            <div className="flex md:hidden items-center justify-center pb-2">
+              <div className="veg-nonveg-toggle">
+                <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
+                <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
+                <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option', {'active': filterType === 'non-veg'})}>Non-Veg</button>
+              </div>
             </div>
         </div>
       </header>
@@ -75,7 +117,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
       <nav className="sticky top-20 z-20 border-b bg-background/90 backdrop-blur-sm">
         <div className="container mx-auto overflow-x-auto px-4">
           <div className="flex items-center justify-start md:justify-center">
-          {menuData.map((category) => (
+          {visibleCategories.map((category) => (
             <a
               key={category.id}
               href={`#${category.id}`}
