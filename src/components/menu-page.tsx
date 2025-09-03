@@ -81,8 +81,10 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         <div className="container mx-auto px-4 pb-2 md:pb-0">
           <div className="flex flex-wrap items-center justify-between gap-4 py-4 md:flex-nowrap md:py-0 md:h-20">
               <div className="text-center md:text-left">
-                  <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">Bombay Darbar Hotel & Restaurant</h1>
-                  <p className="hidden text-sm text-muted-foreground md:block">Authentic Indian Cuisine</p>
+                  <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">
+                    Bombay Darbar
+                    <span className="block text-2xl font-normal text-muted-foreground">Hotel & Restaurant</span>
+                  </h1>
               </div>
               <div className="order-last flex w-full flex-col items-center gap-4 md:order-none md:w-auto md:flex-row md:flex-1 md:justify-end">
                 <div className="veg-nonveg-toggle">
