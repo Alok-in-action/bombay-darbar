@@ -3,10 +3,11 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import type { MenuCategory, MenuItem } from '@/lib/menu-data';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { NonVegIcon, VegIcon } from '@/components/icons';
-import { Search } from 'lucide-react';
+import { Search, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type FilterType = 'all' | 'veg' | 'non-veg';
@@ -15,6 +16,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>(menuData[0]?.id || '');
   const [filterType, setFilterType] = useState<FilterType>('all');
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const navContainerRef = useRef<HTMLDivElement>(null);
   const navItemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -59,6 +61,19 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     }
   }, [activeCategory]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
 
   const filteredMenu = useMemo(() => {
     let menuToFilter = menuData;
@@ -96,6 +111,13 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     if (filterType === 'all') return true;
     return category.items.some(item => item.type === filterType);
   }), [menuData, filterType]);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
 
   return (
@@ -209,6 +231,15 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
           <p>&copy; {new Date().getFullYear()} Bombay Darbar. All rights reserved.</p>
         </div>
       </footer>
+      {showScrollToTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 h-12 w-12 rounded-full shadow-lg"
+          size="icon"
+        >
+          <ChevronUp className="h-6 w-6" />
+        </Button>
+      )}
     </div>
   );
 }
