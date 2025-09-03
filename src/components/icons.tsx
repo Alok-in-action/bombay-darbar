@@ -8,24 +8,30 @@ export const VegIcon = (props: LucideProps) => (
 );
 
 export const NonVegIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red-100" title="Non-Vegetarian">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-red-700"
-      {...props}
-    >
-      <path d="M12.25 10.75 9.75 8.25" />
-      <path d="M15.25 4.75S12.25 1.75 10.5 3.5c-2.25 2.25 1 5.25 1 5.25" />
-      <path d="M14.25 11.75c0 4.5-3.5 8.5-8 8.5-2.5 0-4.5-1.5-5.5-3.5" />
-      <path d="M15.25 10.75c3.5 0 6.5 3 6.5 6.5 0 2-1 4-2.5 5" />
-    </svg>
-  </div>
+    <div className="flex h-5 w-5 items-center justify-center" title="Non-Vegetarian">
+        <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <path
+                d="M12.9498 12.9497L7.00003 7L1.05032 12.9497M12.9498 1.05025L7.00003 7L1.05032 1.05025"
+                stroke="#C62828"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <rect
+                x="1"
+                y="1"
+                width="12"
+                height="12"
+                stroke="#C62828"
+                strokeWidth="2"
+            />
+        </svg>
+    </div>
 );
