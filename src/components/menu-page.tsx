@@ -121,7 +121,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                       </CardHeader>
                       <CardContent className="flex flex-col-reverse justify-between flex-grow">
                         <div className="flex items-center justify-between pt-4">
-                          <p className="text-lg font-semibold text-primary">${item.price}</p>
+                          <p className="text-lg font-semibold text-primary">₹{item.price}</p>
                           {item.popular && <Badge variant="secondary">Popular</Badge>}
                         </div>
                       </CardContent>
