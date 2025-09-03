@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: "Bombay Darbar - Digital Menu",
+  title: "Bombay Darbar Hotel & Restaurant - Digital Menu",
   description: "Experience the authentic flavors of India. Explore our digital menu.",
 };
 

@@ -79,12 +79,12 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-4 pb-2 md:pb-0">
-          <div className="flex h-20 items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4 py-4 md:flex-nowrap md:py-0 md:h-20">
               <div className="text-center md:text-left">
-                  <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">Bombay Darbar</h1>
+                  <h1 className="font-headline text-3xl font-bold text-accent md:text-4xl">Bombay Darbar Hotel & Restaurant</h1>
                   <p className="hidden text-sm text-muted-foreground md:block">Authentic Indian Cuisine</p>
               </div>
-              <div className="hidden flex-1 items-center justify-end gap-4 md:flex">
+              <div className="order-last flex w-full flex-col items-center gap-4 md:order-none md:w-auto md:flex-row md:flex-1 md:justify-end">
                 <div className="veg-nonveg-toggle">
                   <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
                   <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
@@ -101,23 +101,6 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                     />
                 </div>
               </div>
-          </div>
-          <div className="flex flex-col items-center gap-4 md:hidden">
-            <div className="veg-nonveg-toggle">
-              <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
-              <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
-              <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option', {'active': filterType === 'non-veg'})}>Non-Veg</button>
-            </div>
-            <div className="relative w-full max-w-sm">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input
-                    type="search"
-                    placeholder="Search the menu..."
-                    className="pl-10"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
           </div>
         </div>
       </header>
