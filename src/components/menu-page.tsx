@@ -25,6 +25,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const navRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [navHeight, setNavHeight] = useState(0);
+  const isScrollingToCategory = useRef(false);
 
   useEffect(() => {
     const updateHeights = () => {
@@ -43,21 +44,26 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        if (isScrollingToCategory.current) return;
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveCategory(entry.target.id);
           }
         });
       },
-      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+      { rootMargin: `-${headerHeight + navHeight}px 0px -${window.innerHeight - (headerHeight + navHeight) - 1}px 0px`, threshold: 0 }
     );
 
     Object.values(sectionRefs.current).forEach((ref) => {
       if (ref) observer.observe(ref);
     });
 
-    return () => observer.disconnect();
-  }, [menuData]);
+    return () => {
+        Object.values(sectionRefs.current).forEach((ref) => {
+            if (ref) observer.unobserve(ref);
+        });
+    };
+  }, [menuData, headerHeight, navHeight]);
 
   useEffect(() => {
     const activeNavItem = navItemRefs.current[activeCategory];
@@ -138,6 +144,24 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     });
   };
 
+  const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, categoryId: string) => {
+    e.preventDefault();
+    isScrollingToCategory.current = true;
+    setActiveCategory(categoryId);
+    
+    const targetElement = document.getElementById(categoryId);
+    if (targetElement) {
+      const yOffset = - (headerHeight + navHeight); 
+      const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+
+      // Use a timeout to reset the flag after scrolling is likely complete.
+      setTimeout(() => {
+        isScrollingToCategory.current = false;
+      }, 1000); // 1s is usually enough for smooth scroll
+    }
+  }
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -177,16 +201,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
               key={category.id}
               href={`#${category.id}`}
               ref={(el) => (navItemRefs.current[category.id] = el)}
-              onClick={(e) => {
-                e.preventDefault();
-                const targetElement = document.getElementById(category.id);
-                if (targetElement) {
-                  const yOffset = - (headerHeight + navHeight); 
-                  const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                  window.scrollTo({top: y, behavior: 'smooth'});
-                }
-                setActiveCategory(category.id);
-              }}
+              onClick={(e) => handleCategoryClick(e, category.id)}
               className={cn(
                 "whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors duration-300",
                 activeCategory === category.id
