@@ -174,10 +174,10 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
       <header ref={headerRef} className="fixed top-0 left-0 right-0 z-20 bg-background shadow-md">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-2 md:flex-row md:flex-wrap">
-              <div className="flex flex-shrink-0 items-center text-center md:text-left">
+              <div className="flex flex-shrink-0 items-center text-center">
                   <div className="flex flex-col">
                       <h1 className="font-headline text-3xl font-bold text-primary">Bombay Darbar</h1>
-                      <span className="font-headline text-lg -mt-1 text-center md:text-left">Hotel &amp; Restaurant</span>
+                      <span className="font-headline text-lg -mt-1 text-center">Hotel &amp; Restaurant</span>
                   </div>
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
@@ -298,5 +298,3 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     </div>
   );
 }
-
-    
