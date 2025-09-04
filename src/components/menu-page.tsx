@@ -169,7 +169,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
               <div className="flex flex-shrink-0 items-center text-center md:text-left">
-                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={50} height={50} />
+                  <Image src="/logo.png" alt="Bombay Darbar Logo" width={50} height={50} />
                   <h1 className="font-headline text-2xl font-bold ml-4">Bombay Darbar</h1>
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
@@ -281,5 +281,3 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     </div>
   );
 }
-
-    
