@@ -22,12 +22,22 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const navContainerRef = useRef<HTMLDivElement>(null);
   const navItemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [navHeight, setNavHeight] = useState(0);
 
   useEffect(() => {
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
+    const updateHeights = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+      if (navRef.current) {
+        setNavHeight(navRef.current.offsetHeight);
+      }
+    };
+    updateHeights();
+    window.addEventListener('resize', updateHeights);
+    return () => window.removeEventListener('resize', updateHeights);
   }, []);
 
   useEffect(() => {
@@ -159,7 +169,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </header>
 
-      <nav className="sticky top-[184px] md:top-[88px] z-20 border-b bg-background/90 backdrop-blur-sm">
+      <nav ref={navRef} className="sticky z-20 border-b bg-background/90 backdrop-blur-sm" style={{ top: `${headerHeight}px` }}>
         <div className="container mx-auto overflow-x-auto px-4" ref={navContainerRef}>
           <div className="flex items-center justify-start md:justify-center">
           {visibleCategories.map((category) => (
@@ -169,7 +179,12 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
               ref={(el) => (navItemRefs.current[category.id] = el)}
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById(category.id)?.scrollIntoView({ behavior: 'smooth' });
+                const targetElement = document.getElementById(category.id);
+                if (targetElement) {
+                  const yOffset = - (headerHeight + navHeight); 
+                  const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                  window.scrollTo({top: y, behavior: 'smooth'});
+                }
                 setActiveCategory(category.id);
               }}
               className={cn(
@@ -186,7 +201,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-8" style={{ paddingTop: `${headerHeight + 44 + 32}px` }}>
+      <main className="container mx-auto px-4 py-8" style={{ paddingTop: `${headerHeight + navHeight + 32}px` }}>
         {filteredMenu.length > 0 ? (
           <div className="space-y-12">
             {filteredMenu.map((category) => (
@@ -194,7 +209,8 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                 key={category.id}
                 id={category.id}
                 ref={(el) => (sectionRefs.current[category.id] = el)}
-                className="animate-fade-in scroll-mt-48 md:scroll-mt-32"
+                className="animate-fade-in"
+                style={{ scrollMarginTop: `${headerHeight + navHeight}px` }}
               >
                 <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
