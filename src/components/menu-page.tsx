@@ -10,7 +10,9 @@ import { Badge } from '@/components/ui/badge';
 import { NonVegIcon, VegIcon } from '@/components/icons';
 import { Search, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { RoomsPage } from './rooms-page';
 
+type ViewType = 'menu' | 'rooms';
 type FilterType = 'all' | 'veg' | 'non-veg';
 
 export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
@@ -26,6 +28,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [navHeight, setNavHeight] = useState(0);
   const isScrollingToCategory = useRef(false);
+  const [activeView, setActiveView] = useState<ViewType>('menu');
 
   useEffect(() => {
     const updateHeights = () => {
@@ -42,6 +45,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
   }, []);
 
   useEffect(() => {
+    if (activeView !== 'menu') return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (isScrollingToCategory.current) return;
@@ -63,9 +67,10 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
             if (ref) observer.unobserve(ref);
         });
     };
-  }, [menuData, headerHeight, navHeight]);
+  }, [menuData, headerHeight, navHeight, activeView]);
 
   useEffect(() => {
+    if (activeView !== 'menu') return;
     const activeNavItem = navItemRefs.current[activeCategory];
     if (activeNavItem && navContainerRef.current) {
       const container = navContainerRef.current;
@@ -84,7 +89,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         });
       }
     }
-  }, [activeCategory]);
+  }, [activeCategory, activeView]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,6 +106,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
 
 
   const filteredMenu = useMemo(() => {
+    if (activeView !== 'menu') return [];
     let menuToFilter = menuData;
 
     const filterBySearch = (categories: MenuCategory[]) => {
@@ -130,7 +136,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
 
     return menuToFilter;
 
-  }, [searchQuery, menuData, filterType]);
+  }, [searchQuery, menuData, filterType, activeView]);
 
   const visibleCategories = useMemo(() => menuData.filter(category => {
     if (filterType === 'all') return true;
@@ -174,16 +180,18 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
                 <div className="veg-nonveg-toggle toggle-group">
-                  <button id="all-btn" onClick={() => setFilterType('all')} className={cn('toggle-option', {'active': filterType === 'all'})}>All</button>
-                  <button id="veg-btn" onClick={() => setFilterType('veg')} className={cn('toggle-option', {'active': filterType === 'veg'})}>Veg</button>
-                  <button id="nonveg-btn" onClick={() => setFilterType('non-veg')} className={cn('toggle-option non-veg', {'active': filterType === 'non-veg'})}>Non-Veg</button>
+                  <button onClick={() => setActiveView('menu')} className={cn('toggle-option', {'active': activeView === 'menu'})}>Menu</button>
+                  <button onClick={() => setActiveView('rooms')} className={cn('toggle-option', {'active': activeView === 'rooms'})}>Rooms</button>
+                  <button id="all-btn" onClick={() => { setActiveView('menu'); setFilterType('all'); }} className={cn('toggle-option', {'active': activeView === 'menu' && filterType === 'all'})}>All</button>
+                  <button id="veg-btn" onClick={() => { setActiveView('menu'); setFilterType('veg'); }} className={cn('toggle-option', {'active': activeView === 'menu' && filterType === 'veg'})}>Veg</button>
+                  <button id="nonveg-btn" onClick={() => { setActiveView('menu'); setFilterType('non-veg'); }} className={cn('toggle-option non-veg', {'active': activeView === 'menu' && filterType === 'non-veg'})}>Non-Veg</button>
                 </div>
               </div>
               <div className="relative w-full md:w-auto md:flex-grow md:max-w-sm md:ml-auto">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <Input
                       type="search"
-                      placeholder="Search the menu..."
+                      placeholder="Search..."
                       className="pl-10"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
@@ -193,75 +201,83 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </header>
 
-      <nav ref={navRef} className="sticky z-20 border-b bg-background/90 backdrop-blur-sm" style={{ top: `${headerHeight}px` }}>
-        <div className="container mx-auto overflow-x-auto px-4" ref={navContainerRef}>
-          <div className="flex items-center justify-start md:justify-center">
-          {visibleCategories.map((category) => (
-            <a
-              key={category.id}
-              href={`#${category.id}`}
-              ref={(el) => (navItemRefs.current[category.id] = el)}
-              onClick={(e) => handleCategoryClick(e, category.id)}
-              className={cn(
-                "whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors duration-300",
-                activeCategory === category.id
-                  ? 'border-b-2 border-primary text-primary'
-                  : 'text-muted-foreground hover:text-primary'
-              )}
-            >
-              {category.name}
-            </a>
-          ))}
-          </div>
-        </div>
-      </nav>
-
-      <main className="container mx-auto px-4 py-8" style={{ paddingTop: `${headerHeight + navHeight + 32}px` }}>
-        {filteredMenu.length > 0 ? (
-          <div className="space-y-12">
-            {filteredMenu.map((category) => (
-              <section
+      {activeView === 'menu' && (
+        <nav ref={navRef} className="sticky z-20 border-b bg-background/90 backdrop-blur-sm" style={{ top: `${headerHeight}px` }}>
+          <div className="container mx-auto overflow-x-auto px-4" ref={navContainerRef}>
+            <div className="flex items-center justify-start md:justify-center">
+            {visibleCategories.map((category) => (
+              <a
                 key={category.id}
-                id={category.id}
-                ref={(el) => (sectionRefs.current[category.id] = el)}
-                className="animate-fade-in-section"
-                style={{ scrollMarginTop: `${headerHeight + navHeight}px` }}
+                href={`#${category.id}`}
+                ref={(el) => (navItemRefs.current[category.id] = el)}
+                onClick={(e) => handleCategoryClick(e, category.id)}
+                className={cn(
+                  "whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors duration-300",
+                  activeCategory === category.id
+                    ? 'border-b-2 border-primary text-primary'
+                    : 'text-muted-foreground hover:text-primary'
+                )}
               >
-                <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {category.items.map((item) => (
-                    <Card key={item.name} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in">
-                      <CardHeader>
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-center gap-2 flex-grow flex-wrap">
-                            <CardTitle className="font-headline text-lg text-primary">
-                              {item.name}
-                            </CardTitle>
-                            {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
-                          </div>
-                          <p className="text-lg font-semibold menu-price whitespace-nowrap">₹{item.price}</p>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="flex flex-col justify-between flex-grow pt-0">
-                        <div>
-                          <CardDescription>{item.description}</CardDescription>
-                        </div>
-                        {item.popular && (
-                            <div className="pt-4">
-                                <Badge variant="secondary">Popular</Badge>
-                            </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </section>
+                {category.name}
+              </a>
             ))}
+            </div>
           </div>
+        </nav>
+      )}
+
+      <main className="container mx-auto px-4 py-8" style={{ paddingTop: `${(activeView === 'menu' ? headerHeight + navHeight : headerHeight) + 32}px` }}>
+        {activeView === 'menu' ? (
+          <>
+            {filteredMenu.length > 0 ? (
+              <div className="space-y-12">
+                {filteredMenu.map((category) => (
+                  <section
+                    key={category.id}
+                    id={category.id}
+                    ref={(el) => (sectionRefs.current[category.id] = el)}
+                    className="animate-fade-in-up"
+                    style={{ scrollMarginTop: `${headerHeight + navHeight}px` }}
+                  >
+                    <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {category.items.map((item) => (
+                        <Card key={item.name} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in">
+                          <CardHeader>
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex items-center gap-2 flex-grow flex-wrap">
+                                <CardTitle className="font-headline text-lg text-primary">
+                                  {item.name}
+                                </CardTitle>
+                                {item.type === 'veg' ? <VegIcon /> : <NonVegIcon />}
+                              </div>
+                              <p className="text-lg font-semibold menu-price whitespace-nowrap">₹{item.price}</p>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="flex flex-col justify-between flex-grow pt-0">
+                            <div>
+                              <CardDescription>{item.description}</CardDescription>
+                            </div>
+                            {item.popular && (
+                                <div className="pt-4">
+                                    <Badge variant="secondary">Popular</Badge>
+                                </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <p className="text-lg text-muted-foreground">No menu items found for &quot;{searchQuery}&quot;.</p>
+              </div>
+            )}
+          </>
         ) : (
-          <div className="text-center py-16">
-            <p className="text-lg text-muted-foreground">No menu items found for &quot;{searchQuery}&quot;.</p>
-          </div>
+          <RoomsPage />
         )}
       </main>
       <footer className="mt-auto border-t bg-card py-6">
