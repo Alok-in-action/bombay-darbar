@@ -228,7 +228,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </nav>
       )}
 
-      <main className="container mx-auto px-4" style={{ paddingTop: `${(activeView === 'menu' ? headerHeight + navHeight : headerHeight) + 32}px` }}>
+      <main className="container mx-auto px-4" style={{ paddingTop: `${(activeView === 'menu' ? headerHeight + navHeight : headerHeight) + 16}px` }}>
         {activeView === 'menu' ? (
           <>
             {filteredMenu.length > 0 ? (
