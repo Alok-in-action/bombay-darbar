@@ -4,47 +4,47 @@
 
 @layer base {
   :root {
-    --background: 0 0% 97.3%;
-    --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
-    --primary: 34 40% 66.1%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 36 27.3% 87.1%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 117 7.9% 48.8%;
-    --accent-foreground: 0 0% 98%;
+    --background: 354 76% 22%;
+    --foreground: 47 61% 56%;
+    --card: 348 83% 10%;
+    --card-foreground: 47 61% 56%;
+    --popover: 348 83% 10%;
+    --popover-foreground: 47 61% 56%;
+    --primary: 47 61% 56%;
+    --primary-foreground: 348 83% 10%;
+    --secondary: 348 83% 15%;
+    --secondary-foreground: 47 61% 56%;
+    --muted: 348 83% 15%;
+    --muted-foreground: 47 61% 40%;
+    --accent: 47 61% 56%;
+    --accent-foreground: 348 83% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 34 40% 66.1%;
+    --border: 348 83% 20%;
+    --input: 348 83% 20%;
+    --ring: 47 61% 56%;
     --radius: 0.5rem;
   }
   .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 20 14.3% 4.1%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 34 40% 66.1%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 117 7.9% 48.8%;
-    --accent-foreground: 0 0% 98%;
+    --background: 354 76% 22%;
+    --foreground: 47 61% 56%;
+    --card: 348 83% 10%;
+    --card-foreground: 47 61% 56%;
+    --popover: 348 83% 10%;
+    --popover-foreground: 47 61% 56%;
+    --primary: 47 61% 56%;
+    --primary-foreground: 348 83% 10%;
+    --secondary: 348 83% 15%;
+    --secondary-foreground: 47 61% 56%;
+    --muted: 348 83% 15%;
+    --muted-foreground: 47 61% 40%;
+    --accent: 47 61% 56%;
+    --accent-foreground: 348 83% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 34 40% 66.1%;
+    --border: 348 83% 20%;
+    --input: 348 83% 20%;
+    --ring: 47 61% 56%;
   }
 }
 
@@ -64,14 +64,15 @@
 @layer components {
   .menu-price {
     font-family: 'Noto Sans', 'Segoe UI', Arial, Roboto, sans-serif;
-    color: #C3A27A;
+    color: hsl(var(--primary));
   }
   
   /* Container for toggle */
   .veg-nonveg-toggle {
     display: inline-flex;
     border-radius: 25px;
-    background-color: #e0e0e0;
+    background-color: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
     overflow: hidden;
     box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
   }
@@ -84,7 +85,7 @@
     padding: 10px 25px;
     font-weight: 600;
     font-size: 1rem;
-    color: #666;
+    color: hsl(var(--muted-foreground));
     transition: color 0.3s ease;
     flex: 1 1 auto;
     text-align: center;
@@ -96,7 +97,7 @@
 
   /* Active button style */
   .veg-nonveg-toggle .toggle-option.active {
-    color: white;
+    color: hsl(var(--background));
     font-weight: 700;
     z-index: 3;
   }
@@ -107,7 +108,7 @@
     position: absolute;
     inset: 0;
     border-radius: 25px;
-    background-color: var(--active-color, #4CAF50); /* Green by default */
+    background-color: var(--active-color, hsl(var(--primary)));
     z-index: -1;
     transition: background-color 0.3s ease;
   }
