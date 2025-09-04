@@ -224,13 +224,13 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                 key={category.id}
                 id={category.id}
                 ref={(el) => (sectionRefs.current[category.id] = el)}
-                className="animate-fade-in"
+                className="animate-fade-in-section"
                 style={{ scrollMarginTop: `${headerHeight + navHeight}px` }}
               >
                 <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {category.items.map((item) => (
-                    <Card key={item.name} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <Card key={item.name} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 animate-fade-in">
                       <CardHeader>
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-center gap-2 flex-grow flex-wrap">
@@ -281,3 +281,5 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
     </div>
   );
 }
+
+    
