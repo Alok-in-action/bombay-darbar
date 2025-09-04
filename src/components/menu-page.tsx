@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react';
 import type { MenuCategory, MenuItem } from '@/lib/menu-data';
+import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -126,10 +127,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
               <div className="flex-shrink-0 text-center md:text-left">
-                  <h1 className="font-headline text-3xl font-bold text-primary md:text-4xl">
-                    Bombay Darbar
-                    <span className="block text-2xl font-normal text-muted-foreground">Hotel & Restaurant</span>
-                  </h1>
+                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={200} height={100} />
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
                 <div className="veg-nonveg-toggle toggle-group">
