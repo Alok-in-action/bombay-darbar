@@ -127,7 +127,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
               <div className="flex flex-shrink-0 items-center text-center md:text-left">
-                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={40} height={20} />
+                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={50} height={50} />
                   <h1 className="font-headline text-2xl font-bold ml-4">Bombay Darbar</h1>
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
@@ -151,7 +151,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </header>
 
-      <nav className="sticky top-[152px] md:top-[120px] z-20 border-b bg-background/90 backdrop-blur-sm">
+      <nav className="sticky top-[228px] md:top-[88px] z-20 border-b bg-background/90 backdrop-blur-sm">
         <div className="container mx-auto overflow-x-auto px-4" ref={navContainerRef}>
           <div className="flex items-center justify-start md:justify-center">
           {visibleCategories.map((category) => (
@@ -178,7 +178,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-8 pt-48 md:pt-40">
+      <main className="container mx-auto px-4 py-8 pt-64 md:pt-32">
         {filteredMenu.length > 0 ? (
           <div className="space-y-12">
             {filteredMenu.map((category) => (
@@ -186,7 +186,7 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
                 key={category.id}
                 id={category.id}
                 ref={(el) => (sectionRefs.current[category.id] = el)}
-                className="animate-fade-in scroll-mt-32"
+                className="animate-fade-in scroll-mt-48 md:scroll-mt-32"
               >
                 <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">{category.name}</h2>
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
