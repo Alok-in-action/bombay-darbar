@@ -33,6 +33,12 @@ export function RoomsPage() {
   return (
     <div className="animate-fade-in-up">
       <h2 className="font-headline text-3xl font-bold mb-6 border-b-2 border-primary/20 pb-2">Our Rooms</h2>
+      <div className="mb-8 text-center">
+        <h3 className="font-headline text-2xl font-bold text-primary">Luxurious & Flavourish</h3>
+        <p className="mt-2 text-muted-foreground max-w-4xl mx-auto">
+          At Bombay Darbar, experience the perfect blend of luxury and culinary excellence. Our elegantly appointed rooms offer a serene escape, while our restaurant serves up a feast of flavors, crafted with the finest ingredients. Whether you're unwinding in style or indulging in a gourmet meal, Bombay Darbar promises a stay that delights all the senses.
+        </p>
+      </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {rooms.map((room) => (
           <Card key={room.name} className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
