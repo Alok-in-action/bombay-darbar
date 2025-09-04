@@ -180,11 +180,10 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
                 <div className="veg-nonveg-toggle toggle-group">
-                  <button onClick={() => setActiveView('menu')} className={cn('toggle-option', {'active': activeView === 'menu'})}>Menu</button>
-                  <button onClick={() => setActiveView('rooms')} className={cn('toggle-option', {'active': activeView === 'rooms'})}>Rooms</button>
                   <button id="all-btn" onClick={() => { setActiveView('menu'); setFilterType('all'); }} className={cn('toggle-option', {'active': activeView === 'menu' && filterType === 'all'})}>All</button>
                   <button id="veg-btn" onClick={() => { setActiveView('menu'); setFilterType('veg'); }} className={cn('toggle-option', {'active': activeView === 'menu' && filterType === 'veg'})}>Veg</button>
                   <button id="nonveg-btn" onClick={() => { setActiveView('menu'); setFilterType('non-veg'); }} className={cn('toggle-option non-veg', {'active': activeView === 'menu' && filterType === 'non-veg'})}>Non-Veg</button>
+                  <button onClick={() => setActiveView('rooms')} className={cn('toggle-option', {'active': activeView === 'rooms'})}>Rooms</button>
                 </div>
               </div>
               <div className="relative w-full md:w-auto md:flex-grow md:max-w-sm md:ml-auto">
