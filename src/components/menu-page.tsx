@@ -126,8 +126,9 @@ export function MenuPage({ menuData }: { menuData: MenuCategory[] }) {
       <header className="fixed top-0 left-0 right-0 z-20 bg-background/80 backdrop-blur-sm shadow-md">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 py-4 md:flex-row md:flex-wrap">
-              <div className="flex-shrink-0 text-center md:text-left">
-                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={120} height={60} />
+              <div className="flex flex-shrink-0 items-center text-center md:text-left">
+                  <Image src="/logo2.png" alt="Bombay Darbar Logo" width={80} height={40} />
+                  <h1 className="font-headline text-2xl font-bold ml-4">Bombay Darbar</h1>
               </div>
               <div className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row md:justify-end">
                 <div className="veg-nonveg-toggle toggle-group">
